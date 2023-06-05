@@ -1,0 +1,37 @@
+{% extends 'layouts.html' %}
+<!-- Hero Section begins -->
+{% block main %}
+<div class="text-center text-md-start">
+  <h1>
+    <div class="display-2 text-bold">Inno Hub</div>
+    <div class="display-6 text-muted">Sharing your ideas to the world.</div>
+  </h1>
+  <p class="lead text-muted my-4">
+    Explore the pool of innovations that are capable of making life easier and
+    the world at large.
+  </p>
+  <a href="{{ url_for('innovations') }}" class="btn explore p-3">
+    Explore more
+  </a>
+</div>
+{% endblock main%} {% block aside %}
+<div class="text-center">
+  <img
+    src="{{ url_for('static', filename='images/hero_img.jpg') }}"
+    alt=""
+    width="400"
+    height="400"
+  />
+</div>
+{% endblock aside %}
+<!-- <section class="container hero-section">
+  <div class="container">
+    <div class="row justify-content-center align-items-center">
+      <div class="col"></div>
+      <div class="col">
+        
+      </div>
+    </div>
+  </div>
+</section> -->
+<!-- Hero sections ends -->
