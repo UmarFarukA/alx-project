@@ -6,10 +6,10 @@
     <img
       src="{{ url_for('static', filename='images/uploads/' + post.user.picture) }}"
       alt=""
+      width="90"
+      height="90"
     />
-    <a href="{{ url_for('user', user_id=post.user.id) }}"
-      >{{ post.user.username }}</a
-    >
+    <p>{{ post.user.username }}</p>
     <p>{{ post.user.phoneNumber }}</p>
   </div>
   <div class="card w-75 mb-4">
@@ -35,36 +35,6 @@
     </div>
   </div>
 </div>
-{% endfor %} {% endif %}
+{% endfor %} {% endif %} {% endblock main%}
 
-<div class="d-flex justify-content-center align-items-center">
-  <div class="pagination">
-    {% if posts.has_prev %}
-    <a href="" class="page-item" aria-label="Previous">
-      <span class="page-link"> &laquo; </span>
-    </a>
-    {% endif %} {% for number in posts.iter_pages() %} {% if posts.page !=
-    number %}
-    <span class="page-item">
-      <a href="{{ url_for('innovations', page=number) }}" class="page-link"
-        >{{ number }}</a
-      >
-    </span>
-    {% else %}
-    <span class="page-item"><a href="" class="page-link">{{ number }}</a></span>
-    {% endif %} {%endfor %} {% if posts.has_next %}
-    <span class="page-item">
-      <a
-        href="{{ url_for('innovations', page=posts.next_num) }}"
-        class="page-link"
-        >&raquo;</a
-      >
-    </span>
-    {% endif %}
-  </div>
-</div>
-{% endblock main%}
-
-<!-- {% block aside %}
-
-{% endblock aside %} -->
+<!-- {% block aside %} {% endblock aside %} -->

@@ -6,7 +6,7 @@ from flask_bcrypt import Bcrypt
 from flask_mail import Mail, Message
 from werkzeug.utils import secure_filename
 from flask_login import login_user, login_required, current_user, logout_user
-from os import environ, path
+from os import environ, path, urandom
 from models import setup_db, User, Innovation, Category, login_manager,\
      user_schema, users_schema, categories_schema, category_schema, innovation_schema, innovations_schema
 import secrets
@@ -21,7 +21,7 @@ login_manager.login_view = "login"
 login_manager.login_message_category = "info"
 
 
-app.config['SECRET_KEY'] = environ.get('SECRET')
+app.config['SECRET_KEY'] = urandom(24)
 app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.jpeg', '.png', '.gif', '.flv', '.gifv', '.webm']
 app.config['UPLOAD_PATH'] = 'static/images/uploads'
 app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024
@@ -38,7 +38,6 @@ setup_db(app=app)
 @app.route('/home')
 @app.route('/')
 def home():
-
    return render_template('home.html', title='InnoHub')
 
 @app.route('/innovations', methods=['GET', 'POST'])
@@ -46,6 +45,12 @@ def innovations():
      page = request.args.get('page', 1, type=int)
      all_post = Innovation.query.join(User).order_by(Innovation.created_on.desc()).paginate(page=page, per_page=2)
      return render_template('innovations.html', title="InnoHub", posts=all_post)
+
+@app.route('/user/<int:user_id>', methods=['GET', 'POST'])
+def user(user_id):
+     user_post = Innovation.query.join(User).filter_by(id=user_id).all()
+     print(user_post)
+     return render_template('user_innovations.html', title='', posts=user_post)
 
 @app.route('/categories', methods=['GET', 'POST'])
 def categories():
