@@ -21,7 +21,7 @@ login_manager.login_view = "login"
 login_manager.login_message_category = "info"
 
 
-app.config['SECRET_KEY'] = urandom(24)
+app.config['SECRET_KEY'] = environ.get('SECRET')
 app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.jpeg', '.png', '.gif', '.flv', '.gifv', '.webm']
 app.config['UPLOAD_PATH'] = 'static/images/uploads'
 app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024
@@ -49,8 +49,8 @@ def innovations():
 @app.route('/user/<int:user_id>', methods=['GET', 'POST'])
 def user(user_id):
      user_post = Innovation.query.join(User).filter_by(id=user_id).all()
-     print(user_post)
-     return render_template('user_innovations.html', title='', posts=user_post)
+     user = User.query.filter_by(id=user_id).first()
+     return render_template('user_innovations.html', title='', posts=user_post, user=user)
 
 @app.route('/categories', methods=['GET', 'POST'])
 def categories():
